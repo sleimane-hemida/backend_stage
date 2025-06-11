@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion AO - Upload de fichier</title>
+    <link rel="stylesheet" href="{% static 'upload/css/styles.css' %}">
+</head>
+<body>
+    <div class="upload-container">
+        <h1>Uploader un fichier</h1>
+        <form method="post" enctype="multipart/form-data" class="upload-form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="file" class="file-label">
+                    <span class="file-button">Choisir un fichier</span>
+                    <span id="file-name" class="file-name">Aucun fichier sélectionné</span>
+                </label>
+                <input type="file" name="file" id="file" required class="file-input">
+            </div>
+            <button type="submit" class="submit-button">Envoyer</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : "Aucun fichier sélectionné";
+            document.getElementById('file-name').textContent = fileName;
+        });
+    </script>
+</body>
+</html>
