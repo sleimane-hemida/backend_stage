@@ -1,26 +1,8 @@
-<!-- Ajoutez ceci dans votre template existant -->
-<div class="info-card">
-    <h4>Montant :</h4>
-    <p>{{ data.montant|default:"Non spécifié" }}</p>
-</div>
-
-<div class="info-card">
-    <h4>Contact :</h4>
-    <p>{{ data.contact|default:"Non spécifié" }}</p>
-</div>
-
-<div class="info-card">
-    <h4>Email :</h4>
-    <p>{{ data.email|default:"Non spécifié" }}</p>
-</div>
-
-<div class="info-card">
-    <h4>Téléphone :</h4>
-    <p>{{ data.telephone|default:"Non spécifié" }}</p>
-</div>
-
-<!-- Aperçu du texte -->
-<div class="info-card">
-    <h4>Extrait du document :</h4>
-    <pre>{{ data.texte_complet }}</pre>
-</div>
+<h2>Résultats de l'extraction</h2>
+<ul>
+  <li><strong>Montant :</strong> {{ data.montant }}</li>
+  <li><strong>Contact :</strong> {{ data.contact }}</li>
+  <li><strong>Email :</strong> {{ data.email }}</li>
+  <li><strong>Téléphone :</strong> {{ data.telephone }}</li>
+  <li><strong>Extrait :</strong><br>{{ data.extrait }}</li>
+</ul>
