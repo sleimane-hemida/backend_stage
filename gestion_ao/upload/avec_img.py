@@ -121,11 +121,30 @@ def extract_selection_criteria(texte: str) -> list:
 
     return cleaned_criteria
 
+def extract_selection_criteria_from_table(text: str) -> list:
+    """
+    Fonction qui tente d'extraire les lignes de critères même si elles proviennent de tableaux mal formatés.
+    """
+    text = text.lower()
+    lines = text.split("\n")
+    keywords = [
+        "expérience", "qualification", "diplôme", "compétence", "formation",
+        "références", "missions similaires", "année", "durée", "projet",
+        "score", "note", "barème", "pondération", "%"
+    ]
+
+    extracted_lines = []
+    for line in lines:
+        line_clean = line.strip("•-–:\t ").strip()
+        if any(k in line_clean for k in keywords) and len(line_clean) > 10:
+            extracted_lines.append(line_clean)
+
+    return extracted_lines
 
 
 
 if __name__ == "__main__":
-    pdf_path = r"C:\Users\lapto\Downloads\/exemple1AMI.pdf"  # Change ici si besoin
+    pdf_path = r"C:\Users\lapto\Downloads\exemple1AMI.pdf"  # Change ici si besoin
     texte_complet = extract_all_text_from_pdf(pdf_path)
 
     print("\n--- TEXTE EXTRACTE ---\n")
@@ -141,7 +160,16 @@ if __name__ == "__main__":
     criteres = extract_selection_criteria(texte_complet)
 
     if criteres:
+        print("\n--- CRITÈRES DÉTECTÉS ---\n")
         for critere in criteres:
             print(f"- {critere}")
     else:
-        print("Aucun critère trouvé.")
+        print("\nAucun critère détecté via l'extraction standard. Recherche dans les tableaux...\n")
+        criteres_tableau = extract_selection_criteria_from_table(texte_complet)
+
+        if criteres_tableau:
+            print("--- CRITÈRES DÉTECTÉS (TABLEAU) ---")
+            for critere in criteres_tableau:
+                print(f"- {critere}")
+        else:
+                print("Aucun critère trouvé, même dans les tableaux.")
